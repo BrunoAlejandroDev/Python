@@ -28,19 +28,43 @@ lista_perguntas = [
 
 #* Iteracao Sobre a Lista Para Exibir as Perguntas
 pontuacao = 0
-for indice, questao in enumerate(lista_perguntas, start=1):
-    print(f'{indice}. {questao["enunciado"]}') # exibicao de cada pergunta
+respostas_erradas = 0
+
+#* Apresentacao do Quiz
+print('===== QUIZ DO BRUNO =====')
+print('Seja bem vindo(a/e) ao quiz do Bruno. Este quiz está em desenvolvimento, mas acredito que já esteja bem interessante, você deseja participar?\n')
+
+#* Coletar Resposta do Usuário
+input_usuario = input('Você deseja iniciar o quiz (S/N)? ')
+while input_usuario.lower() != 's' or input_usuario.lower() != 'n': # verifica se o valor fornecido esta correto
+    print('Por favor, insira apenas "S" ou "N".')
+    input_usuario = input('Você deseja iniciar o quiz (S/N)? ')
     
-    for letra, texto in questao['alternativas'].items(): # exibicao das alternativas e dos textos das alternativas 
-        print(f'{letra}) {texto}')
-    
-    # solicitar resposta do usuario
-    resposta_usuario = input('Digite sua resposta: ').upper()
-    
-    if resposta_usuario == questao['resposta']:
-        print('Resposta correta!')
-        pontuacao += 1
-    else:
-        print('Resposta incorreta!')
+    if input_usuario.lower() == 's': # deseja jogar o quiz
+        
+        print('O jogo já vai começar, se prepare!')
+        for i in range(3, 0):
+            print('-- iniciando contagem regressiva...')
+            print(f'-- {i}')
+
+        for indice, questao in enumerate(lista_perguntas, start=1):
+            print(f'{indice}. {questao["enunciado"]}') # exibicao de cada pergunta
+            
+            for letra, texto in questao['alternativas'].items(): # exibicao das alternativas e dos textos das alternativas 
+                print(f'{letra}) {texto}')
+            
+            # solicitar resposta do usuario
+            resposta_usuario = input('Digite sua resposta: ').upper()
+            
+            if resposta_usuario == questao['resposta']:
+                print('Resposta correta!')
+                pontuacao += 1
+            else:
+                print('Resposta incorreta!')
+                respostas_erradas += 1
+
+    else: # nao deseja jogar o quiz
+        print('Que pena!')
+        quit()
 
 print(f'Parabéns por concluir o quiz. Sua pontuação foi: {pontuacao}')
