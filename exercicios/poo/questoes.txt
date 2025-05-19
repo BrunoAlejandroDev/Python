@@ -1,0 +1,17 @@
+BLOCO 1 — Fundamentos: Classes, Objetos, Atributos e Métodos
+1. Crie uma classe chamada Pessoa que possua os atributos: ✅
+    nome (string)
+    idade (int)
+    E um método chamado apresentar() que imprime:
+        "Olá, meu nome é <nome> e tenho <idade> anos."
+2. Instancie dois objetos da classe Pessoa com valores diferentes e chame o método apresentar() para cada um. ✅
+3. Agora altere a classe Pessoa para que o método apresentar() retorne a string em vez de imprimir diretamente. ✅
+4. Acrescente um novo atributo profissão à classe, mas faça com que ele tenha um valor padrão "Indefinido" caso não seja informado na criação do objeto.
+5. Implemente um método aniversario() que incremente a idade em 1 ano e retorne a nova idade.
+
+BLOCO 2 — Encapsulamento, Métodos Especiais e Controle de Acesso
+1. Transforme os atributos da classe Pessoa em "protegidos" (use _ antes dos nomes). Depois, implemente métodos get_idade() e set_idade(nova_idade) para controlar o acesso ao atributo idade.
+2. Valide o valor dentro do set_idade para garantir que a idade nunca seja negativa. Caso o valor seja inválido, emita uma mensagem de erro.
+3. Implemente o método especial __str__ para que print(pessoa) retorne a mesma string que o método apresentar() fornecia antes.
+4. Agora transforme o atributo profissão em privado (__profissao) e adicione métodos de acesso (getter e setter). Faça com que o setter só aceite valores que sejam strings com pelo menos 2 caracteres.
+5. Faça com que o método apresentar() use get_profissao() para exibir: "Olá, meu nome é <nome>, tenho <idade> anos e sou <profissão>." (Você pode deixar a profissão como "Indefinida" se não tiver sido definida).
