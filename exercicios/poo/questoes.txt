@@ -15,3 +15,33 @@ BLOCO 2 — Encapsulamento, Métodos Especiais e Controle de Acesso
 8. Implemente o método especial __str__ para que print(pessoa) retorne a mesma string que o método apresentar() fornecia antes. ✅
 9. Agora transforme o atributo profissão em privado (__profissao) e adicione métodos de acesso (getter e setter). Faça com que o setter só aceite valores que sejam strings com pelo menos 2 caracteres. ✅
 10. Faça com que o método apresentar() use get_profissao() para exibir: "Olá, meu nome é <nome>, tenho <idade> anos e sou <profissão>." (Você pode deixar a profissão como "Indefinida" se não tiver sido definida).
+
+BLOCO 3: HERANÇA, POLIMORFISMO E SOBRESCRITA
+Questão 11 — Herança Básica
+    Crie uma classe Animal com um método falar() que retorna a string "Som de animal". Em seguida, crie duas subclasses:
+        Cachorro, que sobrescreve falar() retornando "Au au!"
+        Gato, que sobrescreve falar() retornando "Miau!"
+        Crie instâncias de ambas e chame falar() para verificar o comportamento.
+
+Questão 12 — Reutilização com super()
+    Altere a classe Animal para receber nome e idade no construtor. Faça com que as subclasses Cachorro e Gato reutilizem o construtor da superclasse usando super().
+    Adicione um método apresentar() em Animal que imprime Olá, eu sou {nome} e tenho {idade} anos. Teste nas subclasses.
+
+Questão 13 — Polimorfismo com Sobrescrita
+    Crie uma função chamada apresentar_animal(animal) que recebe um objeto Animal e chama o método falar() e apresentar().
+    Crie uma lista com um Cachorro, um Gato e um Animal genérico. Passe cada um para a função apresentar_animal.
+    Explique o comportamento observado.
+
+Questão 14 — Herança Múltipla
+    Crie duas classes:
+    Voador, com o método voar() que retorna "Voando alto!"
+    Nadador, com o método nadar() que retorna "Nadando rápido!"
+    Depois, crie uma classe Pato que herda de Animal, Voador e Nadador.
+    Reutilize o construtor de Animal com super()
+    Crie um método habilidades() que chama voar() e nadar()
+    Teste a instância de Pato para verificar se ela fala, apresenta-se, voa e nada.
+
+Questão 15 — Boas Práticas com Herança
+    Reflita e escreva uma função descricao_classe(classe) que imprime os nomes de todos os métodos da classe recebida e das superclasses.
+    Use a função dir() e type() para auxiliar.
+    Dica: Crie exemplos práticos onde herança não seria a melhor solução (ex: herança forçada). Tente implementar composição como alternativa.
