@@ -1,5 +1,5 @@
 '''
-1. Transforme os atributos da classe Pessoa em "protegidos" (use _ antes dos nomes). Depois, implemente métodos get_idade() e set_idade(nova_idade) para controlar o acesso ao atributo idade.
+Implemente o método especial __str__ para que print(pessoa) retorne a mesma string que o método apresentar() fornecia antes.
 '''
 
 class Pessoa:
@@ -7,9 +7,12 @@ class Pessoa:
         self._nome = nome
         self._idade = idade
         self.profissao = profissao
-        
+    
     def apresentar(self):
         return f'Ola, meu nome e {self._nome} e eu tenho {self._idade} anos. Minha profissao eh {self.profissao}'
+
+    def __str__(self):
+        return self.apresentar()
     
     def aniversario(self):
         self._idade += 1
@@ -23,8 +26,6 @@ class Pessoa:
             self._idade = nova_idade
         else:
             raise ValueError('A idade deve ser um numero inteiro positivo')
-        
-pessoa1 = Pessoa('Bruno', 24, 'Programador')
-print(pessoa1.get_idade())
-pessoa1.set_idade(25)
-print(pessoa1.get_idade())
+
+pessoa = Pessoa('Bruno', 24, 'Estagiario')
+print(pessoa)
