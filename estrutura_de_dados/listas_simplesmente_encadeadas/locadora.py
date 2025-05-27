@@ -87,6 +87,65 @@ class Locadora:
         while atual:
             print(atual)
             atual = atual.proximo
-            
-jogo_locadora = Locadora()
-print(jogo_locadora.exibir_jogos())
+
+    def procurar_por_id(self, id):
+        atual = self.head
+
+        while atual:
+            if atual.id == id:
+                print(f'Jogo encontrado: {atual}')
+                return
+            atual = atual.proximo
+        print('Jogo nao encontrado')
+
+#* Programa Principal 
+def main():
+
+    #* Inicializar Classe Utilitaria
+    locadora = Locadora()
+
+    #* Interface do Usuario
+    print('=== Bem Vindo a Locadora Jogos do Bruno ===')
+    while True:
+        print('Escolha uma opcao abaixo para continuar:')
+        print('1. Adicionar um novo jogo ao estoque')
+        print('2. Remover um jogo do estoque')
+        print('3. Listar todos os jogos')
+        print('4. Exibir primeiro jogo da lista')
+        print('5. Procurar um jogo por id')
+        print('6. Fechar menu')
+
+        opcao = int(input('Digite uma opcao: '))
+
+        if opcao == 1:
+            id = input('Digite o id do jogo')
+            nome = input('Digite o nome do jogo: ')
+            genero = input('Digite o genero do jogo: ')
+            locadora.adicionar_jogo(id, nome, genero)
+            print('Jogo adicionado com sucesso no estoque da locadora')
+
+        elif opcao == 2:
+            id = input('Digite o id do jogo a ser removido: ')
+            locadora.remover_jogo(id)
+
+        elif opcao == 3:
+            print('=== Lista de jogos no estoque da locadora: ===')
+            lista_jogos = locadora.listar_jogos()
+            for jogo in lista_jogos:
+                print(jogo)
+            print()
+
+        elif opcao == 4:
+            print(locadora.exibir_jogos())
+
+        elif opcao == 5:
+            id = input('Digite o id do jogo a ser encontrado: ')
+            locadora.procurar_por_id(id)
+
+        elif opcao == 6:
+            break
+
+        else:
+            print('Opcao invalida')
+
+main()
