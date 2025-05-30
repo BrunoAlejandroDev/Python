@@ -1,0 +1,81 @@
+Passo a Passo para Construção do Código:
+Aqui está um guia para te ajudar a construir esse sistema, focando em usar listas Python e seus métodos, como fizemos na refatoração do código da biblioteca:
+
+Passo 1: Definir a Classe Tarefa
+Comece pela unidade mais básica do seu sistema.
+
+Crie a classe Tarefa:
+
+No método __init__, defina os atributos: id_tarefa (string ou int), descricao (string), prioridade (string, ex: "Alta", "Média", "Baixa"), status (string, inicialmente "Pendente"), e data_criacao (use datetime.now() do módulo datetime).
+Implemente o método __str__ para retornar uma representação legível da tarefa (ex: f"ID: {self.id_tarefa} | Descrição: {self.descricao} | Prioridade: {self.prioridade} | Status: {self.status} | Criada em: {self.data_criacao.strftime('%d/%m/%Y')}").
+Python
+
+# Exemplo inicial da classe Tarefa
+from datetime import datetime
+
+class Tarefa:
+    def __init__(self, id_tarefa, descricao, prioridade="Média"):
+        self.id_tarefa = id_tarefa
+        self.descricao = descricao
+        self.prioridade = prioridade
+        self.status = "Pendente"
+        self.data_criacao = datetime.now()
+
+    def __str__(self):
+        return (f"ID: {self.id_tarefa} | Status: {self.status} | "
+                f"Prioridade: {self.prioridade} | Descrição: {self.descricao} | "
+                f"Criada em: {self.data_criacao.strftime('%d/%m/%Y')}")
+
+    def marcar_concluida(self):
+        self.status = "Concluída"
+
+    def marcar_pendente(self): # Caso queira reabrir uma tarefa
+        self.status = "Pendente"
+
+Passo 2: Definir a Classe ListaDeTarefas
+Esta classe vai gerenciar uma coleção de objetos Tarefa.
+
+Crie a classe ListaDeTarefas:
+No __init__, defina atributos como nome_lista (string) e tarefas (inicialize como uma lista vazia: self.tarefas = []).
+Implemente os métodos:
+    adicionar_tarefa(self, tarefa_obj): Adiciona um objeto Tarefa à lista self.tarefas. Antes de adicionar, verifique se já não existe uma tarefa com o mesmo id_tarefa na lista.
+    remover_tarefa(self, id_tarefa): Procura uma tarefa pelo id_tarefa na lista self.tarefas e a remove. Use list.remove().
+    procurar_tarefa_por_id(self, id_tarefa): Retorna o objeto Tarefa se encontrado, caso contrário, None.
+    marcar_tarefa_concluida(self, id_tarefa): Encontra a tarefa e chama seu método marcar_concluida().
+    listar_tarefas(self, filtro_status=None, filtro_prioridade=None): Itera sobre self.tarefas. Se filtro_status ou filtro_prioridade forem fornecidos, mostre apenas as tarefas que correspondem aos filtros. Caso contrário, mostre todas.
+    __str__(self): Pode retornar o nome da lista e o número de tarefas (ex: f"Lista: {self.nome_lista} ({len(self.tarefas)} tarefas)").
+
+Passo 3: Definir a Classe GerenciadorDeListas
+Esta classe gerencia múltiplas instâncias de ListaDeTarefas.
+
+Crie a classe GerenciadorDeListas:
+No __init__, defina um atributo listas_de_tarefas (inicialize como uma lista vazia: self.listas_de_tarefas = []).
+Implemente os métodos:
+criar_lista(self, nome_lista): Cria um novo objeto ListaDeTarefas e o adiciona a self.listas_de_tarefas. Verifique se já não existe uma lista com o mesmo nome.
+remover_lista(self, nome_lista): Encontra e remove um objeto ListaDeTarefas de self.listas_de_tarefas.
+listar_todas_listas(self): Itera sobre self.listas_de_tarefas e imprime cada uma (usando o __str__ da ListaDeTarefas).
+procurar_lista_por_nome(self, nome_lista): Retorna o objeto ListaDeTarefas se encontrado, caso contrário, None.
+Passo 4: Criar a Função main() para a Interface do Usuário
+Esta será a função principal que executa o programa e interage com o usuário.
+
+Crie a função main():
+Instancie GerenciadorDeListas.
+Crie um loop while True para o menu principal.
+Menu Principal:
+Opções: Criar nova lista, Remover lista, Listar todas as listas, Selecionar lista para gerenciar, Sair.
+Peça a entrada do usuário.
+Lógica para "Selecionar lista para gerenciar":
+Peça o nome da lista.
+Use gerenciador.procurar_lista_por_nome() para obter o objeto da lista.
+Se encontrada, entre em um novo loop while True para um Submenu de Gerenciamento da Lista de Tarefas Selecionada.
+Submenu da Lista:
+Opções: Adicionar tarefa, Remover tarefa, Marcar tarefa como concluída, Listar tarefas (com filtros), Voltar ao menu principal.
+Para adicionar tarefa, você precisará pedir ao usuário a descrição, prioridade, e gerar um ID único (pode ser um contador simples ou uuid.uuid4().hex[:8]).
+Ponto de Entrada do Script:
+Use if __name__ == "__main__": main() para chamar sua função main.
+Dicas Adicionais:
+IDs Únicos: Pense em como você vai gerar IDs únicos para tarefas. Pode ser um contador global simples que incrementa a cada nova tarefa, ou usar o módulo uuid.
+Validação de Entrada: Use try-except para capturar ValueError se o usuário digitar algo que não seja um número quando esperado. Verifique se os nomes de listas ou IDs de tarefas são válidos.
+Mensagens Claras: Forneça feedback claro ao usuário sobre as ações realizadas (ex: "Tarefa 'X' adicionada com sucesso à lista 'Y'.").
+Modularidade: Mantenha cada classe focada em sua responsabilidade.
+Teste Incremental: Teste cada classe e método à medida que os implementa, antes de tentar integrar tudo na função main(). Por exemplo, depois de criar a classe Tarefa, crie alguns objetos Tarefa e imprima-os para ver se o __str__ funciona.
