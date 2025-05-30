@@ -1,0 +1,48 @@
+__init__(self, nome, preco, descricao="") (Construtor):
+    self: Referência à instância do objeto que está sendo criado.
+    nome (str): Nome do item.
+    preco (float): Preço do item. Convertemos para float para garantir.
+    descricao (str, opcional): Uma descrição para o item. Se não for fornecida, será uma string vazia.
+    Estes parâmetros são armazenados como atributos do objeto (ex: self.nome = nome).
+
+__str__(self): 
+    Este "método mágico" define como um objeto ItemMarketplace deve ser representado quando convertido para uma string (por exemplo, ao usar print(meu_item)).
+    Ele formata uma string amigável mostrando nome, preço (formatado com duas casas decimais) e descrição.
+
+__lt__(self, other):
+    lt significa "less than" (menor que). Este método é crucial para permitir que listas de ItemMarketplace sejam ordenadas usando list.sort() ou a função sorted().
+    Ele compara o self (item atual) com other (outro item).
+    Primeiro, verifica se other também é um ItemMarketplace. Se não for, retorna NotImplemented, o que permite ao Python tentar a operação inversa (ex: other > self) se definida.
+    A lógica de comparação é: se os preços são iguais, desempata comparando os nomes em ordem alfabética. Caso contrário, compara os preços diretamente.
+    Retorna True se self for "menor que" other, e False caso contrário.
+
+__eq__(self, other):
+    eq significa "equals" (igual a). Este método define o critério de igualdade entre dois objetos ItemMarketplace.
+    No contexto deste exercício, foi simplificado para considerar dois itens como iguais se seus nomes forem iguais.
+    Isso pode ser usado por métodos de lista como list.remove(objeto_com_mesmo_nome) se você quisesse remover um item criando um novo objeto apenas com o nome para buscar a 
+    correspondência. No entanto, nosso método remover_por_nome busca o objeto pelo atributo nome e remove a instância específica encontrada.
+
+Classe Marketplace
+    Esta classe gerencia uma coleção de objetos ItemMarketplace. Ela contém a lista de itens e os métodos para realizar as operações solicitadas.
+    No construtor, self.itens = [] inicializa uma lista vazia que armazenará todas as instâncias de ItemMarketplace pertencentes a este marketplace.
+    exibir_itens(self, titulo="..."):
+    Um método útil para imprimir todos os itens do marketplace de forma formatada. Ele itera pela lista self.itens e imprime cada item (o que automaticamente chama o método 
+    __str__ de cada ItemMarketplace).
+
+inserir_inicio: Usa self.itens.insert(0, novo_item), um método de lista que insere novo_item na posição especificada (índice 0).
+inserir_final: Usa self.itens.append(novo_item), que adiciona novo_item ao final da lista.
+remover_por_nome:
+    Itera pela lista self.itens.
+    Compara o nome_item fornecido com o atributo item.nome de cada objeto.
+    Se encontra uma correspondência, armazena a referência a esse objeto específico (item_para_remover = item) e para a busca (break).
+    Se um item foi encontrado (if item_para_remover:), ele é removido da lista usando self.itens.remove(item_para_remover). O método remove() das listas Python remove a 
+    primeira ocorrência do valor especificado. Como passamos o objeto exato que encontramos, ele será removido.
+    Retorna True se removeu, False caso contrário, e imprime uma mensagem.
+verificar_disponibilidade: Similar à busca do remover_por_nome, mas apenas verifica a existência e retorna True ou False, imprimindo o status.
+
+contar_itens: Simplesmente usa a função len(self.itens) para obter o número de itens na lista.
+inverter_ordem: Usa o método self.itens.reverse(), que inverte a ordem dos elementos da lista in-place (modifica a própria lista).
+inserir_ordenado_por_preco:
+    Primeiro, o novo_item é adicionado ao final da lista self.itens com append().
+    Em seguida, self.itens.sort() é chamado. Este método ordena a lista self.itens in-place. Ele automaticamente utiliza o método __lt__ que você definiu na classe ItemMarketplace 
+    para determinar a ordem correta dos itens (pelo preço, e depois pelo nome como critério de desempate).
