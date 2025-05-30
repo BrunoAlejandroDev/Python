@@ -55,18 +55,46 @@ class ListaDeTarefas:
     def marcar_tarefa_como_concluida(self, id_tarefa):
         for tarefa in self.lista_de_tarefas:
             if tarefa.id_tarefa == id_tarefa:
-                tarefa.status_tarefa = 'Concluido'
-                break
+                tarefa.marcar_tarefa_concluida()
+                return True
+        return False
+
+    def marcar_tarefa_como_pendente(self, id_tarefa):
+        for tarefa in self.lista_de_tarefas:
+            if tarefa.id_tarefa == id_tarefa:
+                tarefa.marcar_tarefa_pendente()
+                return True
+            else:
+                print(f'ERRO: tarefa de ID: {id_tarefa} nao encontrada para marcar como pendente')
+                return False
             
     def procurar_tarefa_por_id(self, id_tarefa):
         for tarefa in self.lista_de_tarefas:
             if tarefa.id_tarefa == id_tarefa:
-                print(tarefa)
+                return tarefa
+        return None
         
-    def imprimir_lista_de_tarefas(self):
-        print('\n=== LISTA DE TAREFAS ===')
-        for lista in self.lista_de_tarefas:
-            print(f'{lista}')
+    def listar_tarefas(self, filtro_status, filtro_prioridade):
+        #* verificar se a lista existe
+        if not self.lista_de_tarefas:
+            print(f'A lista {self.nome_lista} nao existe')
+            return
+        
+        #* filtrar tarefas com base em status e prioridade
+        print(f'\n=== Tarefas da Lista {self.nome_lista} ===')
+        tarefas_filtradas = self.lista_de_tarefas
+
+        if filtro_status:
+            tarefas_filtradas = {tarefa for tarefa in tarefas_filtradas if tarefa.status_tarefa.lower() == filtro_status}
+        if filtro_prioridade:
+            tarefas_filtradas = {tarefa for tarefa in tarefas_filtradas if tarefa.prioridade_tarefa == filtro_prioridade}
+        if not tarefas_filtradas:
+            print('Nenhuma tarefa encontrada para os filtros aplicados')
+        else:
+            for tarefa in tarefas_filtradas:
+                print('----------')
+                print(f'{tarefa}')
+                print('----------')
             
     def __str__(self):
         return f'Lista: {self.nome_lista}\n{len(self.lista_de_tarefas)} tarefas'
