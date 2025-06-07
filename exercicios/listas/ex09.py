@@ -7,11 +7,8 @@ Imprima a lista modificada.
 
 numeros = [5, 10, 15, 20, 25]
 
-for indice, numero in enumerate(numeros):
-    if indice == 1:
-        numeros[indice] = 12
-
-numeros[-1] += 5
+numeros[1] = 12 #* alterar o segundo elemento
+numeros[-1] += 5 #* somar 5 ao valor do ultimo elemento
 
 for numero in numeros:
     print(numero)

@@ -11,16 +11,14 @@ Imprima todas as novas listas criadas.
 
 letras = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 
-tres_primeiras_letras = letras[0 : 3]
-for letra in tres_primeiras_letras:
-    print(letra)
+tres_primeiras_letras = letras[:3]
+print(f'Tres primeiras letras: {tres_primeiras_letras}')
 
-print()
-nova_lista_letras = letras[2:6]
-for letra in nova_lista_letras:
-    print(letra)
+elementos_do_meio = letras[2:6]
+print(f'Fatia do meio da lista: {elementos_do_meio}')
 
-print()
-ordem_invertida = len(letras[-1])
+tres_ultimas_letras = letras[-3:]
+print(f'Tres ultimas letras: {tres_ultimas_letras}')
+
 for letra in letras[::-1]:
     print(letra)

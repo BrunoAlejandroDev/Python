@@ -9,24 +9,20 @@ Remova um convidado específico pelo nome usando o método remove().
 Imprima a lista final de convidados.
 '''
 
-convidados = []
 nomes = ['Bruno', 'Alicia', 'Vojvoda', 'Taylor']
-
+convidados = list(nomes) #* inicializa a lista com os valores da lista nome
 
 for convidado in nomes:
-    convidados.append(convidado)
+    convidados.append(convidado) #* preenche a lista 
 
-print('Inicial:')
-for convidado in convidados:
-    print(convidado)
-
-inserir_segunda_posicao = convidados.insert(1, 'Chico Moedas')
+convidados.insert(1, 'Chico Moedas') #* insere um valor na lista em uma posicao especifica (retorna None)
+print(f'Após inserir "Chico Moedas": {convidados}')
 
 remover_primeiro = convidados.pop(0)
-print(f'Primeiro convidado removido: {remover_primeiro}')
+print(f'Convidado removido: {remover_primeiro}')
+print(f'Apos remover o primeiro candidato: {convidados}')
 
-remover_especifico = convidados.remove('Vojvoda')
+convidados.remove('Vojvoda') #* remove um elemento especifico com base no seu valor (retorna None)
+print(f'Apos remover "Vojvoda": {convidados}')
 
-print('Final:')
-for convidado in convidados:
-    print(convidado)
+print(f'Lista final: {convidados}')
