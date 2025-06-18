@@ -19,7 +19,7 @@ dict_candidatos = {
     'Titia leila' : {'numero_candidato' : 4, 'votos' : 0},
 }
 
-def urna_eletronica(voto, votos_nulos, votos_branco, votos_validos):
+def urna_eletronica(voto):
     votos_branco = 0
     votos_nulos = 0
     votos_validos = 0
@@ -47,6 +47,12 @@ def urna_eletronica(voto, votos_nulos, votos_branco, votos_validos):
     if not voto_registrado:
         votos_nulos += 1
 
+def apresentar_resultado():
+    print('\n=== Resultados da Eleicao ===')
+    for nome, dados in dict_candidatos.items():
+        print(f'Nome do candidato(a): {nome} | Numero de votos: {dados["votos"]}')
+    print()
+
 def main():
     #* Mostrar os candidatos ao usuario
     for nome, numero in dict_candidatos.items():
@@ -63,5 +69,11 @@ def main():
             urna_eletronica(voto_usuario)
         except ValueError:
             print('Entrada inválida! Digite apenas numeros inteiros.')
+
+    resultado = input('Voce deseja ver o resultado da eleicao (s/n)? ')
+    if resultado.lower() == 's':
+        apresentar_resultado()
+    else:
+        main()
 
 main()
