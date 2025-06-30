@@ -14,6 +14,6 @@ for produto in produtos:
     if not categoria in categorias_agrupadas:
         categorias_agrupadas[categoria] = [nome_produto]
     else:
-        categorias_agrupadas[categoria]
+        categorias_agrupadas[categoria] += [nome_produto]
     
 print(categorias_agrupadas)
