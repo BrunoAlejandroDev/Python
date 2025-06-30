@@ -22,7 +22,6 @@ def atualizar_palavra(palavra_secreta, palavra_mostrada, letra_usuario):
     lista_palavra_mostrada = []
     for letra in palavra_mostrada:
         lista_palavra_mostrada.append(letra)
-    print(lista_palavra_mostrada)
 
     #* Percorrer com enumerate a palavra secreta
     for indice, letra_palavra_secreta in enumerate(palavra_secreta):
@@ -34,20 +33,21 @@ def atualizar_palavra(palavra_secreta, palavra_mostrada, letra_usuario):
 def main():
     palavra_secreta = 'python'
     palavra_mostrada = '_' * len(palavra_secreta)
-    tentativas = 6
+    tentativas = 3
     letras_chutadas = []
 
+    print("--- Bem-vindo ao Jogo da Forca! ---")
     while '_' in palavra_mostrada and tentativas > 0:
         #* Mostrar status do usuario
         print(f'Palavra: {palavra_mostrada}')
         print(f'Tentativas: {tentativas}')
-        print(f'Letras chutadas> {' '.join(letras_chutadas)}')
+        print(f'Letras chutadas: {' '.join(letras_chutadas)}\n')
 
         #* Pedir letra ao usuario
         letra_usuario = input('Digite uma letra: ')
 
         #* Validacao de entrada
-        if letra_usuario != 1 or not letra_usuario.isalpha():
+        if len(letra_usuario) > 1 or not letra_usuario.isalpha():
             print('Por favor, digite uma letra valida.')
             continue
         if letra_usuario in letras_chutadas:
@@ -58,9 +58,18 @@ def main():
         letras_chutadas.append(letra_usuario)
 
         #* Verificar se a letra esta na palavra secreta
-        if letra_usuario in palavra_secreta:
-            print('Parabens, a letra esta na palavra!')
-            palavra = atualizar_palavra(palavra_secreta, palavra_mostrada, letra_usuario)
+        if letra_usuario in palavra_secreta.lower():
+            print('Parabens, a letra esta na palavra!\n')
+            palavra_mostrada = atualizar_palavra(palavra_secreta, palavra_mostrada, letra_usuario)
         else:
-            print('Letra nao encontrada na palavra secreta. Tente novamente!')
-            tentativas -= 1
+            print('Letra nao encontrada na palavra secreta. Tente novamente!\n')
+            tentativas -= 1   
+    
+    #* Finalizar o jogo
+    if '_' not in palavra_mostrada:
+        print(f'Parabens! Você acertou a palavra: {palavra_secreta}')
+    else:
+        print(f'Fim do jogo. Infelizmente você não acertou a palavra secreta que era: {palavra_secreta}\nTente novamente!')
+        
+if __name__ == '__main__':
+    main()
