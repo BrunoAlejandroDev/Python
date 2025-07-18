@@ -63,3 +63,7 @@ def jogo_adivinhacao():
 
         else:
             raise ValueError('Digite um numero valido')
+        
+    print(f'O numero secreto era: {numero_aleatorio}')
+        
+jogo_adivinhacao()
