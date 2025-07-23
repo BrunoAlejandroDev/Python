@@ -15,8 +15,8 @@ Lembre-se de tratar o caso de empate primeiro para simplificar as outras condiç
 Habilidades desenvolvidas: Estruturas condicionais aninhadas (if/elif/else), pensamento algorítmico, dicionários, lógica de regras.
 '''
 
-jogada1 = 'tesoura'
-jogada2 = 'papel'
+jogada1 = 'papel'
+jogada2 = 'tesoura'
 
 vitorias = {
     'pedra' : 'tesoura',
@@ -24,10 +24,14 @@ vitorias = {
     'papel' : 'pedra'
 }
 
-for vencedor, perdedor in vitorias.items():
-    if jogada1 == vencedor and jogada2 == perdedor:
-        print('jogador 1 venceu')
-        break
-    else:
-        print('jogador 2 venceu')
-        break
+#* Verificar se ocorreu um empate
+if jogada1 == jogada2:
+    print('empate')
+
+#* Verificar se jogador 1 venceu verificando se o valor da sua jogada está presente como chave no dicionário, se sim, comparar o valor que a chave possui
+elif vitorias[jogada1] == jogada2:
+    print('jogador 1 venceu')
+
+#* Caso não seja empate nem vitória do jogador 1, jogador 2 venceu
+else:
+    print('jogador 2 venceu')
