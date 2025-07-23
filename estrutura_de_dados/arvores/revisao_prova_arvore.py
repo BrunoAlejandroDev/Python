@@ -134,6 +134,45 @@ class BinaryTree:
         
         #* Passo 3 - processar o nó atual
         lista_livros.append(no_atual.livro)
+        
+    #* ===== PROCESSO DE BUSCA POR CODIGO =====
+    def search_by_code(self, codigo):
+        print('Processo Atual: Procurar Livro por Codigo')
+        return self._search_by_code(self.root, codigo)
+    
+    def _search_by_code(self, no_atual, codigo):
+        
+        #* Verificar se o nó existe
+        if no_atual is None:
+            print('-- livro nao encontrado')
+            return None
+        
+        #* Verificar se o código passado é igual ao código do livro atual
+        if codigo == no_atual.livro.codigo:
+            print('-- livro encontrado!')
+            return no_atual.livro
+        
+        #* Procurar os livros atraves da arvore
+        if codigo < no_atual.livro.codigo: #* se codigo passado for menor que o código do livro que está sendo comparado, ir para a esquerda
+            return self._search_by_code(no_atual.esquerda, codigo)
+        elif codigo > no_atual.livro.codigo: #* se codigo passado for maior que o código do livro que está sendo comparado, ir para a direita
+            return self._search_by_code(no_atual.direita, codigo)
+        
+    #* ===== PROCESSO DE BUSCA POR LIVRO =====
+    def search_by_title(self, titulo):
+        print('Processo Atual: Procurar Livro por Titulo')
+        #* Pegar uma lista de todos os livros
+        livros = self.in_order_traverse()
+        
+        #* Iterar por todos os livros
+        for livro in livros:
+            livro_normalizado = livro.titulo.lower()
+            if livro_normalizado == titulo:
+                print('-- Livro encontrado')
+                return livro
+            
+        print('-- Livro nao encontrado')
+        return None
     
 livro1 = Livro(1, 'Vespera')
 livro2 = Livro(3, 'O Alquimista')
@@ -146,21 +185,22 @@ arvore_teste.insert(livro2)
 arvore_teste.insert(livro3)
 arvore_teste.insert(livro4)
 
-print('\nResultado in-order')
-in_order = arvore_teste.in_order_traverse()
-for livro in in_order:
-    print(livro)
+# print('\nResultado in-order')
+# in_order = arvore_teste.in_order_traverse()
+# for livro in in_order:
+#     print(livro)
 
-print('\nResultado pre-order')
-pre_order = arvore_teste.pre_order_traverse()
-for livro in pre_order:
-    print(livro)
+# print('\nResultado pre-order')
+# pre_order = arvore_teste.pre_order_traverse()
+# for livro in pre_order:
+#     print(livro)
 
-print('\nResultado post-order')
-post_order = arvore_teste.post_order_traverse()
-for livro in post_order:
-    print(livro)
+# print('\nResultado post-order')
+# post_order = arvore_teste.post_order_traverse()
+# for livro in post_order:
+#     print(livro)
 
-# print(arvore_teste.root.livro)
-# no = Node(livro1)
-# print(no.livro.titulo)
+# encontrar_livro = arvore_teste.search_by_code(livro1.codigo)
+# print(encontrar_livro)
+
+print(arvore_teste.search_by_title('vespera'))
