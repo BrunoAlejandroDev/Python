@@ -174,33 +174,163 @@ class BinaryTree:
         print('-- Livro nao encontrado')
         return None
     
-livro1 = Livro(1, 'Vespera')
-livro2 = Livro(3, 'O Alquimista')
-livro3 = Livro(7, 'Solaris')
-livro4 = Livro(2, 'Perguntaram-me se acredito em Deus')
+    #* ===== MÉTODO PÚBLICO DE REMOÇÃO =====
+    def remove(self, codigo):
+        #* A função pública apenas inicia a remoção a partir da raiz.
+        #* Ela religa a raiz da árvore com o resultado da operação de remoção.
+        self.root = self._remove(self.root, codigo)
 
-arvore_teste = BinaryTree()
-arvore_teste.insert(livro1)
-arvore_teste.insert(livro2)
-arvore_teste.insert(livro3)
-arvore_teste.insert(livro4)
+    # --- MÉTODO PRIVADO E RECURSIVO DE REMOÇÃO ---
+    def _remove(self, no_atual, codigo):
+        #* CASO BASE: Se o nó atual é None, significa que não encontramos o código.
+        #* Retornamos None pois não há nada a fazer.
+        if no_atual is None:
+            return None
 
-# print('\nResultado in-order')
-# in_order = arvore_teste.in_order_traverse()
-# for livro in in_order:
-#     print(livro)
+        #* PASSO 1: Encontrar o nó a ser removido (navegação)
+        if codigo < no_atual.livro.codigo:
+            #* O código está na sub-árvore esquerda.
+            #* Religamos a sub-árvore esquerda com o resultado da remoção nela.
+            no_atual.esquerda = self._remove(no_atual.esquerda, codigo)
+        elif codigo > no_atual.livro.codigo:
+            #* O código está na sub-árvore direita.
+            #* Religamos a sub-árvore direita com o resultado da remoção nela.
+            no_atual.direita = self._remove(no_atual.direita, codigo)
+        else:
+            #* ENCONTRAMOS O NÓ! Agora, tratamos os 3 casos de remoção.
+            
+            #* CASO 1: O nó é uma folha (não tem filhos à esquerda NEM à direita)
+            if no_atual.esquerda is None and no_atual.direita is None:
+                #* Simplesmente removemos a referência a ele, retornando None.
+                return None
+            
+            #* CASO 2: O nó tem apenas um filho (à direita OU à esquerda)
+            #* Se não tem filho à esquerda, o único filho só pode ser o da direita.
+            elif no_atual.esquerda is None:
+                # Retornamos o filho da direita para substituir o nó atual.
+                return no_atual.direita
+            #* Se não tem filho à direita, o único filho só pode ser o da esquerda.
+            elif no_atual.direita is None:
+                #* Retornamos o filho da esquerda para substituir o nó atual.
+                return no_atual.esquerda
 
-# print('\nResultado pre-order')
-# pre_order = arvore_teste.pre_order_traverse()
-# for livro in pre_order:
-#     print(livro)
+            #* CASO 3: O nó tem dois filhos (o caso complexo)
+            else:
+                #* Estratégia: Encontrar o "sucessor em ordem" - o menor nó na sub-árvore da direita.
+                sucessor = self._find_min(no_atual.direita)
+                
+                #* Copiar os dados do sucessor para o nó atual (efetivamente "substituindo" o valor).
+                no_atual.livro = sucessor.livro
+                
+                #* Agora, remover o nó sucessor (que agora é um duplicado) da sub-árvore direita.
+                #* Essa chamada recursiva cairá em um caso mais simples (Caso 1 ou 2).
+                no_atual.direita = self._remove(no_atual.direita, sucessor.livro.codigo)
 
-# print('\nResultado post-order')
-# post_order = arvore_teste.post_order_traverse()
-# for livro in post_order:
-#     print(livro)
+        #* Retorna o nó atual (com suas sub-árvores possivelmente modificadas).
+        return no_atual
 
-# encontrar_livro = arvore_teste.search_by_code(livro1.codigo)
-# print(encontrar_livro)
+    #* ===== FUNÇÃO AJUDANTE PARA ENCONTRAR O MENOR NÓ EM UMA SUB-ÁRVORE =====
+    def _find_min(self, no_atual):
+        #* O menor nó está sempre o mais à esquerda possível.
+        while no_atual.esquerda is not None:
+            no_atual = no_atual.esquerda
+        return no_atual
+    
+#* ===== Bloco 2: Função Principal com o Menu Interativo =====
 
-print(arvore_teste.search_by_title('vespera'))
+def main():
+    """Função que executa o menu principal da aplicação."""
+    biblioteca = BinaryTree()
+    # Adicionando alguns livros para começar
+    biblioteca.insert(Livro(150, "A Guerra dos Tronos"))
+    biblioteca.insert(Livro(101, "O Senhor dos Anéis"))
+    biblioteca.insert(Livro(210, "Duna"))
+    biblioteca.insert(Livro(120, "O Hobbit"))
+    
+    while True:
+        print("\n--- Biblioteca Digital ---")
+        print("1. Inserir novo livro")
+        print("2. Remover livro por código")
+        print("3. Buscar livro")
+        print("4. Mostrar todos os livros")
+        print("5. Sair")
+        
+        try:
+            escolha = int(input("Escolha uma opção: "))
+        except ValueError:
+            print("Erro: Por favor, digite um número.")
+            continue
+
+        if escolha == 1:
+            try:
+                codigo = int(input("Digite o código do livro: "))
+                titulo = input("Digite o título do livro: ")
+                biblioteca.insert(Livro(codigo, titulo))
+                print("Livro inserido com sucesso!")
+            except ValueError:
+                print("Erro: O código deve ser um número inteiro.")
+
+        elif escolha == 2:
+            try:
+                codigo = int(input("Digite o código do livro a ser removido: "))
+                biblioteca.remove(codigo)
+                print(f"Tentativa de remoção do livro com código {codigo} concluída.")
+            except ValueError:
+                print("Erro: O código deve ser um número inteiro.")
+
+        elif escolha == 3:
+            print("Buscar por: 1. Código | 2. Título")
+            try:
+                sub_escolha = int(input("Sua escolha: "))
+                if sub_escolha == 1:
+                    codigo = int(input("Digite o código: "))
+                    livro = biblioteca.search_by_code(codigo)
+                    if livro:
+                        print(f"Livro encontrado: {livro}")
+                    else:
+                        print("Livro não encontrado.")
+                elif sub_escolha == 2:
+                    titulo = input("Digite o título: ")
+                    livro = biblioteca.search_by_title(titulo)
+                    if livro:
+                        print(f"Livro encontrado: {livro}")
+                    else:
+                        print("Livro não encontrado.")
+                else:
+                    print("Opção de busca inválida.")
+            except ValueError:
+                print("Erro: Escolha ou código inválido.")
+
+        elif escolha == 4:
+            print("Mostrar em: 1. In-Ordem (por código) | 2. Pré-Ordem | 3. Pós-Ordem")
+            try:
+                sub_escolha = int(input("Sua escolha: "))
+                livros = []
+                if sub_escolha == 1:
+                    livros = biblioteca.in_order_traverse()
+                elif sub_escolha == 2:
+                    livros = biblioteca.pre_order_traverse()
+                elif sub_escolha == 3:
+                    livros = biblioteca.post_order_traverse()
+                else:
+                    print("Opção de listagem inválida.")
+                
+                if not livros:
+                    print("A biblioteca está vazia ou a opção foi inválida.")
+                else:
+                    for livro in livros:
+                        print(livro)
+            except ValueError:
+                print("Erro: Opção inválida.")
+        
+        elif escolha == 5:
+            print("Saindo do sistema. Até logo!")
+            break
+        
+        else:
+            print("Opção inválida. Tente novamente.")
+
+# ===== Bloco 3: Execução do Programa =====
+# Verifica se o script está sendo executado diretamente para chamar a função main.
+if __name__ == "__main__":
+    main()
