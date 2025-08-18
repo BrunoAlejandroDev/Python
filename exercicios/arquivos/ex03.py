@@ -3,29 +3,18 @@ Escreva uma função adicionar_tarefa(tarefa) que recebe uma string como parâme
 '''
 import os
 
-#* Criar o arquivo
-arquivo = open(r'C:\Users\Usuário\Downloads\tarefa.txt', 'a')
-arquivo.close()
-
 #* Criar a funcao
-def adicionar_tarefa(tarefa):
-    #* Pegar o path do arquivo
-    caminho_arquivo = r'C:\Users\Usuário\Downloads\tarefa.txt'
-
+def adicionar_tarefa(tarefa):    
     try:
-        #* Verificar se ele existe
-        if os.path.exists(caminho_arquivo):
-            with open(caminho_arquivo, 'a') as file:
-                file.write(f'\n{tarefa}')  
-        else:
-            raise FileNotFoundError
-        
+        with open(r'C:\Users\Usuário\Downloads\tarefa.txt', 'a', encoding='utf-8') as file:
+            file.write(f'{tarefa}\n')        
     except FileNotFoundError:
-        print('Arquivo nao existe')
+        print('Arquivo nao encontrado.')
         
 def main():
-    tarefa = input('Digite uma tarefa: ')
+    tarefa = input('Digite uma tarefa para ser adicionada a lista: ')
     adicionar_tarefa(tarefa)
+    print(f'-- tarefa {tarefa} adicionada com sucesso!')
     
 if __name__ == '__main__':
     main()
