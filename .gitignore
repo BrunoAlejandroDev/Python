@@ -1,0 +1,23 @@
+# --- Bytecode do Python (Gerado automaticamente) ---
+__pycache__/
+*.py[cod]
+*$py.class
+
+# --- Ambientes Virtuais ---
+# Nomes comuns de pastas de venv
+.venv/
+venv/
+env/
+ENV/
+
+# --- Variáveis de Ambiente e Segredos ---
+# IMPORTANTE: Nunca suba senhas ou chaves de API
+.env
+
+# --- IDEs e Editores (Configurações locais do usuário) ---
+.vscode/
+.idea/
+
+# --- Arquivos do Sistema Operacional ---
+.DS_Store
+Thumbs.db
