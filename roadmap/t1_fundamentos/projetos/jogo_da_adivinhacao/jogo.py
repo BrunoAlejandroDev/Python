@@ -2,35 +2,30 @@
 #* Importacao do modulo random
 import random
 
+#* Importacao de funcoes
+from obter_palpite_jogador import obter_palpite
+
+print('===== Bem Vindo(a) ao Jogo da Adivinhacao =====')
+
 #* Gerar numero aleatorio que deve ser adivinhado
-numero_aleatorio = random.randint(1, 100)
+numero_secreto = random.randint(1, 100)
 
-#* Solicitar palpite do usuario
-num_usuario = int(input('Digite um numero entre 1 e 100: '))
+#* Definir numero de tentativas do jogador 
+tentativas = 0
 
-num_eh_aceito = False
-
-if num_usuario >= 1 and num_usuario <= 100:
-    num_eh_aceito = True
+while True:
     
-while num_usuario < 1 or num_usuario > 100:
-    print(f'ATENÇAO: Voce deve digitar um numero entre 1 e 100. O numero {num_usuario} nao eh aceito.')
+    #* Pegar palpite do jogador
+    palpite_jogador = obter_palpite()
     
-    #* pedir novamente para usuario digitar um numero
-    num_usuario = int(input('Digite um numero entre 1 e 100: '))
+    #* Incrementar o numero de tentativas
+    tentativas += 1
     
-    if num_usuario >= 1 and num_usuario <= 100:
-        num_eh_aceito = True
+    if palpite_jogador == numero_secreto:
+        print(f"Parabéns! Você acertou o número {numero_secreto}!")
+        print(f"Você precisou de {tentativas} tentativas.")
         break
-    
-if num_eh_aceito:
-    while True:
-        if num_usuario == numero_aleatorio:
-            print('-- Parabens, voce acertou o numero!')
-            break
-        elif num_usuario > numero_aleatorio:
-            print('-- Parece que seu palpite foi maior que o numero a ser adivinhado, tente novamente!')
-            num_usuario = int(input('Digite um numero entre 1 e 100: '))
-        else:
-            print('-- Parece que seu palpite foi menor que o numero a ser adivinhado, tente novamente!')
-            num_usuario = int(input('Digite um numero entre 1 e 100: '))
+    elif palpite_jogador > numero_secreto:
+        print('-- Muito alto. Tente novamente!')
+    else:
+        print('-- Muito baixo. Tente novamente!')
